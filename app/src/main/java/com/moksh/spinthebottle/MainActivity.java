@@ -1,5 +1,6 @@
 package com.moksh.spinthebottle;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private float pivotY;
     private boolean isSpinning = false;
     private Random random = new Random();
+    private MediaPlayer mediaPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottleImage = findViewById(R.id.bottleImage);
+        mediaPlayer = MediaPlayer.create(this, R.raw.bottlesound);
 
 
 
@@ -31,13 +35,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 spinTheBottle();
+
             }
         });
     }
 
     private void spinTheBottle(){
         if(!isSpinning) {
-            int newDir = random.nextInt(1800);
+            final int newDir = random.nextInt(1800);
             pivotX = bottleImage.getPivotX();
             pivotY = bottleImage.getPivotY();
             Animation rotate = new RotateAnimation(lastDir, newDir, pivotX, pivotY);
@@ -47,11 +52,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationStart(Animation animation) {
                     isSpinning = true;
+
+                    mediaPlayer.seekTo(random.nextInt(1450));
+                    mediaPlayer.start();
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     isSpinning = false;
+                    mediaPlayer.pause();
 
                 }
 
