@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private void spinTheBottle(){
         if(!isSpinning) {
             final int newDir = random.nextInt(1800);
-            pivotX = bottleImage.getPivotX();
-            pivotY = bottleImage.getPivotY();
+            pivotX = bottleImage.getWidth()/2;
+            pivotY = bottleImage.getHeight()/2;
             Animation rotate = new RotateAnimation(lastDir, newDir, pivotX, pivotY);
             rotate.setDuration(2500);
             rotate.setFillAfter(true);
